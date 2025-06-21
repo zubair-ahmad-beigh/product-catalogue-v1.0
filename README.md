@@ -88,19 +88,19 @@ product-catalogue-v1.0/
 4. **Test the endpoints**
    ```bash
    # Health check
-   curl http://localhost:8080/health
+   curl http://localhost:8082/health
    
    # Get all products
-   curl http://localhost:8080/products
+   curl http://localhost:8082/products
    
    # Search products (v1.1+)
-   curl http://localhost:8080/products/search?keyword=machine
+   curl http://localhost:8082/products/search?keyword=machine
    
    # Get product by ID (v2.0+)
-   curl http://localhost:8080/products/1
+   curl http://localhost:8082/products/1
    
    # Get statistics (v2.0+)
-   curl http://localhost:8080/products/stats
+   curl http://localhost:8082/products/stats
    ```
 
 ### Docker Build
@@ -112,7 +112,7 @@ product-catalogue-v1.0/
 
 2. **Run container**
    ```bash
-   docker run -p 8080:8080 product-catalogue:latest
+   docker run -p 8082:8082 product-catalogue:latest
    ```
 
 ### Kubernetes Deployment
@@ -169,7 +169,7 @@ product-catalogue-v1.0/
 
 - `JAVA_OPTS`: JVM options (default: `-Xms512m -Xmx1024m -XX:+UseG1GC`)
 - `SPRING_PROFILES_ACTIVE`: Spring profile (default: `default`)
-- `SERVER_PORT`: Application port (default: `8080`)
+- `SERVER_PORT`: Application port (default: `8082`)
 
 ### Application Properties
 
@@ -177,7 +177,7 @@ Key configuration options in `application.properties`:
 
 ```properties
 # Server Configuration
-server.port=8080
+server.port=8082
 server.servlet.context-path=/
 
 # Application Information
@@ -205,17 +205,17 @@ mvn verify
 ### API Testing
 ```bash
 # Test health endpoint
-curl -X GET http://localhost:8080/health
+curl -X GET http://localhost:8082/health
 
 # Test products endpoint
-curl -X GET http://localhost:8080/products
+curl -X GET http://localhost:8082/products
 
 # Test search endpoint (v1.1+)
-curl -X GET "http://localhost:8080/products/search?keyword=machine"
+curl -X GET "http://localhost:8082/products/search?keyword=machine"
 
 # Test error handling (v2.0+)
-curl -X GET "http://localhost:8080/products/search"
-curl -X GET http://localhost:8080/products/999
+curl -X GET "http://localhost:8082/products/search"
+curl -X GET http://localhost:8082/products/999
 ```
 
 ## 🔒 Security
