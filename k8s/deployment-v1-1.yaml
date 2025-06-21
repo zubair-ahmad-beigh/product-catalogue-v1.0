@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-catalogue-v1-1
+  namespace: v1-1
+  labels:
+    app: product-catalogue
+    version: "1.1"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-catalogue
+      version: "1.1"
+  template:
+    metadata:
+      labels:
+        app: product-catalogue
+        version: "1.1"
+    spec:
+      containers:
+      - name: product-catalogue
+        image: your-registry/product-catalogue:1.1.0
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 3
+        env:
+        - name: JAVA_OPTS
+          value: "-Xms512m -Xmx1024m -XX:+UseG1GC"
+        - name: SPRING_PROFILES_ACTIVE
+          value: "production"
+      restartPolicy: Always 

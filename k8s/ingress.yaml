@@ -1,0 +1,43 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: product-catalogue-ingress
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+  - host: product-catalogue.local  # Change this to your domain
+    http:
+      paths:
+      - path: /v1(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: product-catalogue-v1-service
+            port:
+              number: 80
+      - path: /v1\.1(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: product-catalogue-v1-1-service
+            port:
+              number: 80
+      - path: /v2(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: product-catalogue-v2-service
+            port:
+              number: 80
+      - path: /(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: product-catalogue-v2-service  # Default to v2
+            port:
+              number: 80 
