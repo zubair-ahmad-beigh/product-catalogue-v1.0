@@ -71,7 +71,7 @@ product-catalogue-v1.0/
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/zubair-ahmad-beigh/product-catalogue-v1.0
    cd product-catalogue-v1.0
    ```
 
